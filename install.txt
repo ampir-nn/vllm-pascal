@@ -1,0 +1,51 @@
+1. установка cuda и драйверов NVIDIA 
+обязательно версия cuda - 12.6
+https://developer.nvidia.com/cuda-12-6-0-download-archive?target_os=Linux&target_arch=x86_64&Distribution=Debian&target_version=12&target_type=deb_network
+инструкця по установке на debian 12 https://greenwebpage.com/community/how-to-install-cuda-on-debian-12/
+
+2. установка https://www.anaconda.com/docs/getting-started/miniconda/main
+
+
+conda create -n venv conda-forge \
+    git \
+    python=3.12
+
+conda activate venv
+
+1. сборка pytorch v2.8.0 для Pascal
+git clone --branch v2.8.0 https://github.com/pytorch/pytorch.git
+
+патч
+pascal-support.patch
+
+cd pytorch
+git submodule update --init --recursive
+export USE_CUDA=1
+export CMAKE_CUDA_ARCHITECTURES="60;61"
+export TORCH_CUDA_ARCH_LIST="6.0;6.1"
+export CUDA_HOME=/usr/local/cuda-12.6
+export PATH=$CUDA_HOME/bin:$PATH
+export CUDACXX=$CUDA_HOME/bin/nvcc
+export MAX_JOBS=3
+export USE_FBGEMM=0
+export USE_AVX512=0
+export BUILD_TEST=0  
+python setup.py install или python setup.py bdist_wheel --skip-build
+
+
+1. сборка triton 3.4.0
+git clone https://github.com/triton-lang/triton -b release/3.4.0
+
+патч
+1000-pascal-support.patch
+2000-build-error-fix.patch
+
+export CMAKE_CUDA_ARCHITECTURES="60;61"
+export TORCH_CUDA_ARCH_LIST="6.0;6.1"
+export CUDA_HOME=/usr/local/cuda-12.6
+export PATH=$CUDA_HOME/bin:$PATH
+export CUDACXX=$CUDA_HOME/bin/nvcc
+export MAX_JOBS=3
+
+pip install -r python/requirements.txt
+pip install -e .

@@ -1,0 +1,32 @@
+Установка Pascal-compatible VLLM 0.11.0
+
+1. установка cuda и драйверов NVIDIA 
+обязательно версия cuda - 12.6
+https://developer.nvidia.com/cuda-12-6-0-download-archive?target_os=Linux&target_arch=x86_64&Distribution=Debian&target_version=12&target_type=deb_network
+инструкця по установке на debian 12 https://greenwebpage.com/community/how-to-install-cuda-on-debian-12/
+
+2. установка https://www.anaconda.com/docs/getting-started/miniconda/main
+
+3. создание окружения
+conda create -n venv conda-forge \
+    git \
+    python=3.12
+
+4. pip install vllm-0.11.0+pascal.cu126-cp312-cp312-linux_x86_64.whl
+5. pip uninstall torch triton
+6. pip install triton-3.4.0-cp312-cp312-linux_x86_64.whl
+7. pip install torch-2.8.0a0+gitba56102-cp312-cp312-linux_x86_64.whl
+В конце установки torch triton инсталятор будет ругатся на зависимости - не обращяем внимания.
+
+Необходимо установить libnccl2_2.28.3-1+cuda12.6_amd64 libnccl-dev_2.28.3-1+cuda12.6_amd64
+
+запуск модели на трех GPU
+export VLLM_ATTENTION_BACKEND=XFORMERS
+vllm serve  jart25/Qwen3-Coder-30B-A3B-Instruct-Int4-gptq  --tensor-parallel-size 1 --pipeline-parallel-size 3  --max-num-seqs 1  --max-model-len 4096  --dtype float16 --quantization gptq  --gpu-memory-utilization 0.95 --swap-space 0 --cpu-offload-gb 0 --enable-expert-parallel --enable-auto-tool-choice --tool-call-parser qwen3_coder
+
+запуск модели на двух GPU
+export VLLM_ATTENTION_BACKEND=XFORMERS
+vllm serve  jart25/Qwen3-Coder-30B-A3B-Instruct-Int4-gptq  --tensor-parallel-size 2 --max-num-seqs 1  --max-model-len 4096  --dtype float16 --quantization gptq  --gpu-memory-utilization 0.95 --swap-space 0 --cpu-offload-gb 0 --enable-expert-parallel --enable-auto-tool-choice --tool-call-parser qwen3_coder
+
+запуск gguf модели на двух GPU
+vllm serve ./Qwen3-14B-Q5_K_M.gguf   --tensor-parallel-size 2  --max-num-seqs 1  --max-model-len 16384  --max-num-batched-tokens 16384 --dtype float16 --quantization gguf --gpu-memory-utilization 0.95 --swap-space 0 --cpu-offload-gb 0

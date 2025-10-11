@@ -1,0 +1,39 @@
+--- a/lib/Dialect/TritonGPU/Transforms/AccelerateMatmul.cpp
++++ b/lib/Dialect/TritonGPU/Transforms/AccelerateMatmul.cpp
+@@ -759,8 +759,12 @@
+
+ static Value promoteOperand(OpBuilder &builder, Location loc, Value operand,
+                             Type promotedType) {
+-  Type tensorPromotedType = cast<RankedTensorType>(operand.getType())
+-                                .cloneWith(std::nullopt, promotedType);
++  RankedTensorType tensor = cast<RankedTensorType>(operand.getType());
++  Type tensorElementType = tensor.getElementType();
++  Type tensorPromotedType = tensor.cloneWith(std::nullopt, promotedType);
++  if (tensorElementType.isF16() && promotedType.isF32()) {
++    return builder.create<arith::ExtFOp>(loc, tensorPromotedType, operand);
++  }
+  Type operandElType =
+      cast<RankedTensorType>(operand.getType()).getElementType();
+  if (type::isFloat8(operandElType)) {
+    return builder.create<FpToFpOp>(loc, tensorPromotedType, operand);
+  }
+  return builder.create<arith::ExtFOp>(loc, tensorPromotedType, operand);
+  
+  
+--- a/python/triton/language/core.py
++++ b/python/triton/language/core.py
+@@ -2148,7 +2148,7 @@
+
+    if other is not None:
+        other = _semantic.to_tensor(other)
+    padding_option = _unwrap_if_constexpr(padding_option)
+    cache_modifier = _unwrap_if_constexpr(cache_modifier)
+-   eviction_policy = _unwrap_if_constexpr(eviction_policy)
++   eviction_policy = _unwrap_if_constexpr("")
+    return _semantic.load(pointer, mask, other, boundary_check, padding_option, cache_modifier, eviction_policy,
+                          volatile)    
+
+
+  
+
+

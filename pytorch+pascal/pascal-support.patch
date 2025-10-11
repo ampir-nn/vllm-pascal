@@ -1,0 +1,33 @@
+--- a/torch/_inductor/scheduler.py
++++ b/torch/_inductor/scheduler.py
+@@ -4038,9 +4038,9 @@
+
+        device_scheduling = get_scheduling_for_device(device.type)
+        if device_scheduling is None:
+            raise RuntimeError(f"Unsupported device type: {device.type}")
+
+        if not has_triton():
+            if (
+                device.type == "cuda"
+-               and (device_props := torch.cuda.get_device_properties(device)).major < 7
++               and (device_props := torch.cuda.get_device_properties(device)).major < 6
+                raise GPUTooOldForTriton(device_props, inspect.currentframe())
+            elif is_gpu(device.type) and not device.type == "mps":
+                raise TritonMissing(inspect.currentframe())
+  
+  
+--- a/torch/utils/_triton.py
++++ b/torch/utils/_triton.py
+@@ -126,4 +126,4 @@
+
+    def cuda_extra_check(device_interface: Any) -> bool:
+-       return device_interface.Worker.get_device_properties().major >= 7
++       return device_interface.Worker.get_device_properties().major >= 6
+
+    def cpu_extra_check(device_interface: Any) -> bool:
+        import triton.backends   
+
+
+  
+
+

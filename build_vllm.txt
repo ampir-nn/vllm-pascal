@@ -1,0 +1,31 @@
+1. install cuda - 12.6
+https://developer.nvidia.com/cuda-12-6-0-download-archive?target_os=Linux&target_arch=x86_64&Distribution=Debian&target_version=12&target_type=deb_network
+install debian 12 https://greenwebpage.com/community/how-to-install-cuda-on-debian-12/
+
+2. install miniconda https://www.anaconda.com/docs/getting-started/miniconda/main
+
+
+conda create -n venv conda-forge \
+    git \
+    python=3.12
+
+conda activate venv
+
+
+cd ~/vllm-0.11.0
+pip install -r requirements/build.txt
+
+
+Патч vllm_0.11.0+pascal
+
+export CMAKE_CUDA_ARCHITECTURES="60;61"
+export CMAKE_BUILD_TYPE=Release
+export MAX_JOBS=3
+export CUDA_HOME=/usr/local/cuda-12.6
+export PATH=$CUDA_HOME/bin:$PATH
+export CUDACXX=$CUDA_HOME/bin/nvcc
+export SETUPTOOLS_SCM_PRETEND_VERSION=0.11.0+pascal
+
+
+
+python -m pip wheel . -w dist --no-deps --no-build-isolation -v

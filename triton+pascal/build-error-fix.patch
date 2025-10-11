@@ -1,0 +1,13 @@
+--- a/python/src/ir.cc
++++ b/python/src/ir.cc
+@@ -1824,7 +1824,6 @@
+
+          llvm::SmallVector<std::string, 3> storage;
+          llvm::SmallVector<const char *, 3> debugTypes =
+              parseCommaSeparatedValues(debugOnly, storage);
+          ::llvm::DebugFlag = true;
+          using namespace llvm;
+-         setCurrentDebugTypes(debugTypes.data(), debugTypes.size());          
+        }
+
+        bool haveTiming = ::triton::tools::getBoolEnv("MLIR_ENABLE_TIMING");          
