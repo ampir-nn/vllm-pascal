@@ -27,10 +27,11 @@ Or use this helpful guide for Debian 12:
 👉 [https://www.anaconda.com/docs/getting-started/miniconda/main](https://www.anaconda.com/docs/getting-started/miniconda/main)
 
 ### 3. Create Conda Environment
-
+```sh
 conda create -n venv conda-forge git python=3.12
-conda activate venv
 
+conda activate venv
+```
 ### 4. Install Prebuilt Wheels
 ```sh
 pip install vllm-0.11.0+pascal.cu126-cp312-cp312-linux_x86_64.whl
