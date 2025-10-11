@@ -21,12 +21,13 @@ conda create -n venv conda-forge \
 Необходимо установить libnccl2_2.28.3-1+cuda12.6_amd64 libnccl-dev_2.28.3-1+cuda12.6_amd64
 
 запуск модели на трех GPU
-export VLLM_ATTENTION_BACKEND=XFORMERS
+export VLLM_ATTENTION_BACKEND=TRITON_ATTN
 vllm serve  jart25/Qwen3-Coder-30B-A3B-Instruct-Int4-gptq  --tensor-parallel-size 1 --pipeline-parallel-size 3  --max-num-seqs 1  --max-model-len 4096  --dtype float16 --quantization gptq  --gpu-memory-utilization 0.95 --swap-space 0 --cpu-offload-gb 0 --enable-expert-parallel --enable-auto-tool-choice --tool-call-parser qwen3_coder
 
 запуск модели на двух GPU
-export VLLM_ATTENTION_BACKEND=XFORMERS
+export VLLM_ATTENTION_BACKEND=TRITON_ATTN
 vllm serve  jart25/Qwen3-Coder-30B-A3B-Instruct-Int4-gptq  --tensor-parallel-size 2 --max-num-seqs 1  --max-model-len 4096  --dtype float16 --quantization gptq  --gpu-memory-utilization 0.95 --swap-space 0 --cpu-offload-gb 0 --enable-expert-parallel --enable-auto-tool-choice --tool-call-parser qwen3_coder
 
 запуск gguf модели на двух GPU
+export VLLM_ATTENTION_BACKEND=TRITON_ATTN
 vllm serve ./Qwen3-14B-Q5_K_M.gguf   --tensor-parallel-size 2  --max-num-seqs 1  --max-model-len 16384  --max-num-batched-tokens 16384 --dtype float16 --quantization gguf --gpu-memory-utilization 0.95 --swap-space 0 --cpu-offload-gb 0
