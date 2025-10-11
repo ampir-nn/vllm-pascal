@@ -51,7 +51,7 @@ sudo apt install libnccl2_2.28.3-1+cuda12.6_amd64 libnccl-dev_2.28.3-1+cuda12.6_
 ### 6. Running Models
 ### 3-GPU Setup (Pipeline Parallelism)
 ```sh
-export VLLM_ATTENTION_BACKEND=XFORMERS
+export VLLM_ATTENTION_BACKEND=TRITON_ATTN
 
 vllm serve jart25/Qwen3-Coder-30B-A3B-Instruct-Int4-gptq \
   --tensor-parallel-size 1 \
@@ -69,7 +69,7 @@ vllm serve jart25/Qwen3-Coder-30B-A3B-Instruct-Int4-gptq \
 ```
 ### 2-GPU Setup (Tensor Parallelism)
 ```sh
-export VLLM_ATTENTION_BACKEND=XFORMERS
+export VLLM_ATTENTION_BACKEND=TRITON_ATTN
 
 vllm serve jart25/Qwen3-Coder-30B-A3B-Instruct-Int4-gptq \
   --tensor-parallel-size 2 \
@@ -86,7 +86,7 @@ vllm serve jart25/Qwen3-Coder-30B-A3B-Instruct-Int4-gptq \
 ```
 ### GGUF Model on 2 GPUs
 ```sh
-export VLLM_ATTENTION_BACKEND=XFORMERS
+export VLLM_ATTENTION_BACKEND=TRITON_ATTN
 
 vllm serve ./Qwen3-14B-Q5_K_M.gguf \
   --tensor-parallel-size 2 \
