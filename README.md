@@ -1,4 +1,4 @@
-# VLLM for Pascal GPUs (CUDA 12.6)
+# VLLM 0.11.0 for Pascal GPUs (CUDA 12.6)
 
 This repository provides instructions and prebuilt wheels for installing **VLLM 0.11.0** with **Pascal GPU support** (e.g., GTX 1060, 1070, 1080, etc.) using **CUDA 12.6**.
 
