@@ -32,7 +32,7 @@ conda create -n venv conda-forge git python=3.12
 conda activate venv
 
 ### 4. Install Prebuilt Wheels
-
+```sh
 pip install vllm-0.11.0+pascal.cu126-cp312-cp312-linux_x86_64.whl
 
 pip uninstall torch triton -y
@@ -40,7 +40,7 @@ pip uninstall torch triton -y
 pip install triton-3.4.0-cp312-cp312-linux_x86_64.whl
 
 pip install torch-2.8.0a0+gitba56102-cp312-cp312-linux_x86_64.whl
-
+```
 At the end of the torch/triton installation, the installer will complain about dependencies — just ignore it.
 
 ### 5. Install NCCL Libraries
