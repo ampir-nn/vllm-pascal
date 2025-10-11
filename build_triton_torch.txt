@@ -30,7 +30,7 @@ export MAX_JOBS=3
 export USE_FBGEMM=0
 export USE_AVX512=0
 export BUILD_TEST=0  
-python setup.py install или python setup.py bdist_wheel --skip-build
+python setup.py install или python setup.py bdist_wheel
 
 
 1. сборка triton 3.4.0
