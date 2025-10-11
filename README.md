@@ -44,12 +44,12 @@ pip install torch-2.8.0a0+gitba56102-cp312-cp312-linux_x86_64.whl
 At the end of the torch/triton installation, the installer will complain about dependencies — just ignore it.
 
 ### 5. Install NCCL Libraries
-
+```sh
 sudo apt install libnccl2_2.28.3-1+cuda12.6_amd64 libnccl-dev_2.28.3-1+cuda12.6_amd64
-
+```
 ### 6. Running Models
-3-GPU Setup (Pipeline Parallelism)
-
+### 3-GPU Setup (Pipeline Parallelism)
+```sh
 export VLLM_ATTENTION_BACKEND=XFORMERS
 
 vllm serve jart25/Qwen3-Coder-30B-A3B-Instruct-Int4-gptq \
@@ -65,9 +65,9 @@ vllm serve jart25/Qwen3-Coder-30B-A3B-Instruct-Int4-gptq \
   --enable-expert-parallel \
   --enable-auto-tool-choice \
   --tool-call-parser qwen3_coder
-
-2-GPU Setup (Tensor Parallelism)
-
+```
+### 2-GPU Setup (Tensor Parallelism)
+```sh
 export VLLM_ATTENTION_BACKEND=XFORMERS
 
 vllm serve jart25/Qwen3-Coder-30B-A3B-Instruct-Int4-gptq \
@@ -82,9 +82,9 @@ vllm serve jart25/Qwen3-Coder-30B-A3B-Instruct-Int4-gptq \
   --enable-expert-parallel \
   --enable-auto-tool-choice \
   --tool-call-parser qwen3_coder
-
-GGUF Model on 2 GPUs
-
+```
+### GGUF Model on 2 GPUs
+```sh
 export VLLM_ATTENTION_BACKEND=XFORMERS
 
 vllm serve ./Qwen3-14B-Q5_K_M.gguf \
@@ -97,7 +97,7 @@ vllm serve ./Qwen3-14B-Q5_K_M.gguf \
   --gpu-memory-utilization 0.95 \
   --swap-space 0 \
   --cpu-offload-gb 0
-
+```
 
 ### Notes
     This setup is specific to Pascal GPUs and CUDA 12.6
