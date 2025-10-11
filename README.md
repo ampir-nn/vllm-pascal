@@ -34,8 +34,11 @@ conda activate venv
 ### 4. Install Prebuilt Wheels
 
 pip install vllm-0.11.0+pascal.cu126-cp312-cp312-linux_x86_64.whl
+
 pip uninstall torch triton -y
+
 pip install triton-3.4.0-cp312-cp312-linux_x86_64.whl
+
 pip install torch-2.8.0a0+gitba56102-cp312-cp312-linux_x86_64.whl
 
 At the end of the torch/triton installation, the installer will complain about dependencies — just ignore it.
@@ -48,6 +51,7 @@ sudo apt install libnccl2_2.28.3-1+cuda12.6_amd64 libnccl-dev_2.28.3-1+cuda12.6_
 3-GPU Setup (Pipeline Parallelism)
 
 export VLLM_ATTENTION_BACKEND=XFORMERS
+
 vllm serve jart25/Qwen3-Coder-30B-A3B-Instruct-Int4-gptq \
   --tensor-parallel-size 1 \
   --pipeline-parallel-size 3 \
@@ -65,6 +69,7 @@ vllm serve jart25/Qwen3-Coder-30B-A3B-Instruct-Int4-gptq \
 2-GPU Setup (Tensor Parallelism)
 
 export VLLM_ATTENTION_BACKEND=XFORMERS
+
 vllm serve jart25/Qwen3-Coder-30B-A3B-Instruct-Int4-gptq \
   --tensor-parallel-size 2 \
   --max-num-seqs 1 \
@@ -81,6 +86,7 @@ vllm serve jart25/Qwen3-Coder-30B-A3B-Instruct-Int4-gptq \
 GGUF Model on 2 GPUs
 
 export VLLM_ATTENTION_BACKEND=XFORMERS
+
 vllm serve ./Qwen3-14B-Q5_K_M.gguf \
   --tensor-parallel-size 2 \
   --max-num-seqs 1 \
