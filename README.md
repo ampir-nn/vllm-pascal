@@ -28,7 +28,7 @@ Or use this helpful guide for Debian 12:
 
 ### 3. Create Conda Environment
 ```sh
-conda create -n venv conda-forge git python=3.12
+conda create -n venv -c  conda-forge  git python=3.12
 
 conda activate venv
 ```
