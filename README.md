@@ -1,5 +1,5 @@
 # vllm-pascal
-# VLLM 0.11.0 for Pascal GPUs (CUDA 12.6)
+# VLLM 0.13.0 for Pascal GPUs (CUDA 12.6)
 
 This repository provides instructions and prebuilt wheels for installing **VLLM 0.11.0** with **Pascal GPU support** (e.g., GTX 1060, 1070, 1080, etc.) using **CUDA 12.6**.
 
@@ -34,6 +34,17 @@ conda create -n venv -c  conda-forge  git python=3.12
 conda activate venv
 ```
 ### 4. Install Prebuilt Wheels
+VLLM 0.13.0
+```sh
+pip install https://github.com/ampir-nn/vllm-pascal/releases/download/wheels/vllm-0.13.0+pascal.cu126-cp312-cp312-linux_x86_64.whl
+```
+```sh
+pip uninstall torch triton -y
+
+pip install https://github.com/ampir-nn/vllm-pascal/releases/download/wheels/torch-2.9.0a0+git0fabc3b-cp312-cp312-linux_x86_64.whl
+
+pip install https://github.com/ampir-nn/vllm-pascal/releases/download/wheels/triton-3.5.0+gitc3c476f3-cp312-cp312-linux_x86_64.whl
+```
 
 VLLM 0.11.0
 ```sh
