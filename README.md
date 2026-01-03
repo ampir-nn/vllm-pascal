@@ -45,6 +45,7 @@ pip install https://github.com/ampir-nn/vllm-pascal/releases/download/wheels/tor
 
 pip install https://github.com/ampir-nn/vllm-pascal/releases/download/wheels/triton-3.5.0+gitc3c476f3-cp312-cp312-linux_x86_64.whl
 ```
+At the end of the torch/triton installation, the installer will complain about dependencies — just ignore it.
 
 VLLM 0.11.0
 ```sh
