@@ -50,6 +50,13 @@ VLLM 0.11.0
 ```sh
 pip install https://github.com/ampir-nn/vllm-pascal/releases/download/wheels/vllm-0.11.0+pascal.cu126-cp312-cp312-linux_x86_64.whl
 ```
+```sh
+pip uninstall torch triton -y
+
+pip install https://github.com/ampir-nn/vllm-pascal/releases/download/wheels/triton-3.4.0-cp312-cp312-linux_x86_64.whl
+
+pip install https://github.com/ampir-nn/vllm-pascal/releases/download/wheels/torch-2.8.0a0+gitba56102-cp312-cp312-linux_x86_64.whl
+```
 VLLM 0.10.2
 ```sh
 pip install https://github.com/ampir-nn/vllm-pascal/releases/download/wheels/vllm-0.10.2+pascal.cu126-cp312-cp312-linux_x86_64.whl
